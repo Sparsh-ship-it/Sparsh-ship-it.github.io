@@ -1039,6 +1039,57 @@ body::after {
   background: linear-gradient(145deg, #07101c, #050711) !important;
 }
 
+
+/* =========================================================
+   DECISION SIMULATOR // ADVANCED INTERACTIVE UI
+   ========================================================= */
+.sim-hud{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:0 0 12px}
+.sim-hud-box{padding:12px 13px;border:1px solid rgba(53,231,255,.14);border-radius:15px;background:linear-gradient(145deg,rgba(53,231,255,.055),rgba(140,98,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.sim-hud-box span{display:block;color:#7f8ca3;font-size:.52rem;font-weight:900;letter-spacing:1px}
+.sim-hud-box b{display:block;margin-top:4px;color:#fff;font-size:.9rem}
+#simTimer{color:#35e7ff}
+.sim-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(270px,.55fr);gap:12px}
+.sim-main,.sim-side{background:linear-gradient(145deg,rgba(7,14,27,.96),rgba(5,7,16,.98))!important;border-color:rgba(53,231,255,.18)!important}
+.sim-case-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08);color:#aeb9ca;font-size:.58rem;font-weight:900;letter-spacing:1px}
+.sim-case-head>div{display:flex;align-items:center;gap:8px}
+.sim-case-dot{width:7px;height:7px;border-radius:50%;background:#35e7ff;box-shadow:0 0 12px #35e7ff;animation:simPulse 1.4s infinite}
+.sim-difficulty{padding:6px 9px;border-radius:99px;border:1px solid #35e7ff44;color:#35e7ff;background:#35e7ff09}
+.sim-message{position:relative;margin-top:16px;padding:20px;border:1px solid #35e7ff33;border-radius:18px;background:radial-gradient(circle at 0 0,#35e7ff09,transparent 42%),linear-gradient(145deg,#0a1220,#060912);overflow:hidden;box-shadow:inset 0 0 35px #35e7ff04}
+.sim-mail-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;min-width:0}
+.sim-label{width:52px;flex:0 0 52px;color:#6f7c91;font-size:.55rem;font-weight:900;letter-spacing:1px}
+.sim-evidence,.sim-link{border:1px solid transparent;background:transparent;color:#fff;cursor:pointer;font:inherit;text-align:left;border-radius:8px;padding:5px 7px;transition:.2s}
+.sim-evidence:hover,.sim-link:hover,.sim-evidence.found,.sim-link.found{border-color:#35e7ff66;background:#35e7ff0c;color:#35e7ff;box-shadow:0 0 18px #35e7ff0b}
+.sim-mail-body{color:#dbe4f1;font-size:.78rem;line-height:1.7;margin:12px 0 15px}
+.sim-link{color:#ff91e0!important;border-color:#ff4fd81c;background:#ff4fd805}
+.sim-link:hover,.sim-link.found{border-color:#ff4fd866;background:#ff4fd80d}
+.sim-scanline{position:absolute;left:-20%;right:-20%;height:1px;top:0;background:linear-gradient(90deg,transparent,#35e7ff88,transparent);box-shadow:0 0 12px #35e7ff55;animation:simScan 5s linear infinite}
+.sim-instruction{margin:13px 0;color:#8996aa;font-size:.62rem}
+.sim-instruction span{color:#35e7ff}.sim-instruction b{color:#fff}
+.sim-clues{display:grid;gap:7px;margin-bottom:13px}
+.sim-clue{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:#ffffff03;color:#aab5c6;font-size:.63rem;animation:simReveal .35s ease both}
+.sim-clue strong{color:#ff91e0}.sim-clue.good{border-color:#35e7ff44;background:#35e7ff07}
+.sim-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sim-choice{display:flex;align-items:center;gap:11px;min-height:64px;padding:12px;border:1px solid rgba(255,255,255,.10);border-radius:15px;background:linear-gradient(135deg,#ffffff06,#ffffff02);color:#dbe5f2;text-align:left;cursor:pointer;transition:.22s}
+.sim-choice>span{font-size:1.15rem}.sim-choice b{display:block;font-size:.67rem}.sim-choice small{display:block;margin-top:3px;color:#778399;font-size:.52rem}
+.sim-choice:hover{transform:translateY(-3px);border-color:#35e7ff66;background:linear-gradient(135deg,#35e7ff0e,#8c62ff08);box-shadow:0 0 24px #35e7ff0a}
+.sim-choice.safe:hover{border-color:#a8ff3e66}.sim-choice.danger:hover{border-color:#ff4fd866}
+.sim-choice.selected{transform:translateY(-2px);border-color:#35e7ff;background:#35e7ff10;box-shadow:0 0 25px #35e7ff12}
+.sim-choice.correct{border-color:#a8ff3e88;background:#a8ff3e0d;color:#d7ffb2}.sim-choice.incorrect{border-color:#ff628d88;background:#ff628d0d;color:#ffc3d4}
+.sim-result{min-height:54px;margin-top:12px;padding:12px 13px;border:1px solid rgba(53,231,255,.18);border-radius:13px;background:#35e7ff05;color:#aebbd0;font-size:.68rem;line-height:1.5}
+.sim-result.good{color:#caffea;border-color:#a8ff3e55;background:#a8ff3e07}.sim-result.bad{color:#ffc3d4;border-color:#ff628d55;background:#ff628d07}
+.sim-risk-label,.sim-progress-top{display:flex;justify-content:space-between;margin-top:13px;color:#68758a;font-size:.52rem;font-weight:900;letter-spacing:.7px}
+.sim-risk-label b{color:#35e7ff}.sim-riskbar,.sim-progressbar{height:7px;margin-top:7px;border-radius:99px;background:#ffffff07;overflow:hidden}
+.sim-riskbar i,.sim-progressbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#a8ff3e,#35e7ff,#8c62ff,#ff4fd8);transition:width .6s cubic-bezier(.16,1,.3,1);box-shadow:0 0 13px #35e7ff44}
+.sim-footer-actions{display:flex;gap:8px;margin-top:14px}.sim-footer-actions .btn{flex:1}
+.sim-footer-actions #simNext:not(:disabled){color:#fff;border-color:#35e7ff66;background:#35e7ff0d}
+.sim-footer-actions #simNext:disabled{opacity:.4;cursor:not-allowed}
+.sim-side-title{display:flex;gap:8px;align-items:center;padding-bottom:14px;border-bottom:1px solid #ffffff0d;color:#fff;font-size:.65rem;font-weight:900;letter-spacing:1px}.sim-side-title span{color:#35e7ff}
+.sim-progress{margin-top:17px}.sim-progress-top b{color:#35e7ff}.sim-status{display:flex;gap:11px;margin-top:18px;padding:13px;border:1px solid #35e7ff22;border-radius:14px;background:#35e7ff05}.sim-status-icon{color:#35e7ff;font-size:1.2rem}.sim-status b{display:block;color:#fff;font-size:.6rem}.sim-status small{display:block;margin-top:4px;color:#7e8ba0;font-size:.52rem;line-height:1.4}
+.sim-tip{display:flex;gap:10px;margin-top:10px;padding:13px;border-radius:14px;background:linear-gradient(145deg,#8c62ff08,#35e7ff05);border:1px solid #8c62ff1d}.sim-tip>span{font-size:1rem}.sim-tip b{color:#cfc8ff;font-size:.62rem}.sim-tip p{margin:5px 0 0;color:#8996aa;font-size:.58rem;line-height:1.5}
+.sim-scorecard{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.sim-scorecard div{padding:12px;border:1px solid #ffffff0c;border-radius:13px;background:#ffffff03}.sim-scorecard span{display:block;color:#69758a;font-size:.48rem;font-weight:900}.sim-scorecard b{display:block;margin-top:5px;color:#fff;font-size:.72rem}
+@keyframes simPulse{50%{opacity:.35;transform:scale(.7)}}@keyframes simScan{from{transform:translateY(0)}to{transform:translateY(260px)}}@keyframes simReveal{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+@media(max-width:699px){.sim-hud{grid-template-columns:repeat(2,1fr)}.sim-layout{grid-template-columns:1fr}.sim-actions{grid-template-columns:1fr}.sim-mail-row{align-items:flex-start;flex-direction:column;gap:3px}.sim-label{width:auto}.sim-footer-actions{flex-direction:column}}
+
 </style>
 </head>
 <body>
@@ -1218,23 +1269,73 @@ body::after {
 <div class="heading">
 <span class="tag">06 // DECISION SIMULATOR</span>
 <h2>SPOT THE RED FLAGS</h2>
-<p class="muted">Safe fictional scenario. Inspect the message and choose the safest response.</p>
+<p class="muted">Inspect the evidence, uncover the red flags, then make the safest decision.</p>
 </div>
-<div class="panel">
-<div style="border:1px solid var(--line);border-radius:16px;padding:16px;background:#080a14">
-<p><b>From:</b> security-alert@example.invalid</p>
-<p><b>Subject:</b> URGENT — verify your account now</p>
-<p>Your account may be suspended today. Verify immediately to avoid losing access.</p>
-<p class="muted">🔗 verify-account.example.invalid/login</p>
+
+<div class="sim-hud">
+  <div class="sim-hud-box"><span>CASE</span><b id="simCase">01 / 04</b></div>
+  <div class="sim-hud-box"><span>SCORE</span><b id="simScore">0</b></div>
+  <div class="sim-hud-box"><span>STREAK</span><b id="simStreak">0</b></div>
+  <div class="sim-hud-box"><span>TIME</span><b id="simTimer">30s</b></div>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px">
-<button class="btn" data-sim="link">🔗 Click the link</button>
-<button class="btn pink" data-sim="report">🚩 Report / verify independently</button>
-<button class="btn" data-sim="reply">💬 Reply to the sender</button>
-<button class="btn green" data-sim="official">🛡️ Open the official app/site</button>
-</div>
-<div class="check" id="sim">Waiting for your decision…</div>
-<div class="meter"><i id="riskbar"></i></div>
+
+<div class="sim-layout">
+  <div class="panel sim-main">
+    <div class="sim-case-head">
+      <div><span class="sim-case-dot"></span><span id="simType">EMAIL SECURITY ALERT</span></div>
+      <span id="simDifficulty" class="sim-difficulty">ROOKIE</span>
+    </div>
+
+    <div class="sim-message" id="simMessage">
+      <div class="sim-mail-row"><span class="sim-label">FROM</span><button class="sim-evidence" data-clue="sender">security-alert@example.invalid</button></div>
+      <div class="sim-mail-row"><span class="sim-label">SUBJECT</span><button class="sim-evidence" data-clue="urgency">URGENT — verify your account now</button></div>
+      <div class="sim-mail-body">Your account may be suspended today. Verify immediately to avoid losing access.</div>
+      <button class="sim-link" data-clue="link">🔗 verify-account.example.invalid/login</button>
+      <div class="sim-scanline"></div>
+    </div>
+
+    <div class="sim-instruction">
+      <span>◈</span> Tap suspicious details to inspect them. Find <b id="simClueCount">0 / 3</b> red flags.
+    </div>
+
+    <div class="sim-clues" id="simClues"></div>
+
+    <div class="sim-actions">
+      <button class="sim-choice" data-sim2="click"><span>🔗</span><div><b>Click the link</b><small>Follow the message</small></div></button>
+      <button class="sim-choice safe" data-sim2="report"><span>🚩</span><div><b>Report / verify independently</b><small>Use a trusted channel</small></div></button>
+      <button class="sim-choice danger" data-sim2="reply"><span>💬</span><div><b>Reply to the sender</b><small>Ask if it is legitimate</small></div></button>
+      <button class="sim-choice safe" data-sim2="official"><span>🛡️</span><div><b>Open the official app/site</b><small>Navigate there yourself</small></div></button>
+    </div>
+
+    <div class="sim-result" id="simResult">Waiting for your investigation…</div>
+    <div class="sim-risk-label"><span>THREAT EXPOSURE</span><b id="simRiskText">UNKNOWN</b></div>
+    <div class="sim-riskbar"><i id="simRiskbar"></i></div>
+
+    <div class="sim-footer-actions">
+      <button class="btn" id="simNext" disabled>NEXT CASE →</button>
+      <button class="btn" id="simReset">RESET SIMULATOR</button>
+    </div>
+  </div>
+
+  <aside class="panel sim-side">
+    <div class="sim-side-title"><span>◈</span> INVESTIGATION CONSOLE</div>
+    <div class="sim-progress">
+      <div class="sim-progress-top"><span>CASE PROGRESS</span><b id="simProgressText">25%</b></div>
+      <div class="sim-progressbar"><i id="simProgress"></i></div>
+    </div>
+    <div class="sim-status" id="simStatus">
+      <span class="sim-status-icon">⌁</span>
+      <div><b>SCAN READY</b><small>Inspect the message before deciding.</small></div>
+    </div>
+    <div class="sim-tip" id="simTip">
+      <span>💡</span>
+      <div><b>Analyst tip</b><p>Urgency is a classic social-engineering signal. Slow down and verify independently.</p></div>
+    </div>
+    <div class="sim-scorecard">
+      <div><span>RED FLAGS FOUND</span><b id="simFound">0</b></div>
+      <div><span>BEST DECISION</span><b id="simBest">—</b></div>
+    </div>
+  </aside>
 </div>
 </div>
 </section>
@@ -1440,6 +1541,109 @@ qs("#pwmsg").textContent=p?["Very weak","Weak","Fair","Good","Strong","Excellent
 });
 
 route();
+
+/* ===== ADVANCED DECISION SIMULATOR ===== */
+const simCases=[
+ {type:"EMAIL SECURITY ALERT",difficulty:"ROOKIE",subject:"URGENT — verify your account now",sender:"security-alert@example.invalid",body:"Your account may be suspended today. Verify immediately to avoid losing access.",link:"verify-account.example.invalid/login",clues:{
+ sender:"The sender uses an unfamiliar address and does not match a verified support domain.",
+ urgency:"The message creates pressure with an immediate account-suspension threat.",
+ link:"The destination is a suspicious domain and should not be trusted from the message."
+ },tip:"Urgency + an unfamiliar sender + a suspicious destination is a classic phishing pattern.",best:"report",risk:8},
+ {type:"DELIVERY NOTIFICATION",difficulty:"GUARDIAN",subject:"Package held — payment required",sender:"delivery-update@parcel-notify.example.invalid",body:"Your package cannot be delivered. Pay a small customs fee within 15 minutes to prevent return.",link:"parcel-pay.example.invalid/fee",clues:{
+ sender:"The sender is not a verified delivery company address.",
+ urgency:"A short deadline is used to make you act before checking.",
+ link:"The payment page is hosted on an unrelated-looking domain."
+ },tip:"Never let a delivery message rush you into payment. Open the carrier's official app instead.",best:"official",risk:9},
+ {type:"ACCOUNT SUPPORT MESSAGE",difficulty:"GUARDIAN",subject:"Security team needs your verification code",sender:"support-team@example.invalid",body:"We detected unusual activity. Send the 6-digit code you just received so we can secure your account.",link:"No link — asks for OTP",clues:{
+ sender:"The sender is not independently verified.",
+ urgency:"The message uses a security scare to justify an unusual request.",
+ link:"A legitimate support process should not require you to reveal a private OTP."
+ },tip:"An OTP is a secret authentication factor. Treat any request for it as a major warning.",best:"report",risk:10},
+ {type:"SOCIAL MEDIA LOGIN",difficulty:"ANALYST",subject:"Your account was viewed from a new device",sender:"security@example.invalid",body:"Review the recent activity below. If this was not you, sign in immediately to secure your account.",link:"account-review.example.invalid/login",clues:{
+ sender:"The sender address should be verified independently rather than trusted from the message.",
+ urgency:"The alert pushes you toward an immediate sign-in.",
+ link:"The supplied login destination should not be used; navigate to the service yourself."
+ },tip:"Even realistic security alerts can be spoofed. Use the official app or type the known address yourself.",best:"official",risk:9}
+];
+
+let simIndex=0,simScore=0,simStreak=0,simFound=0,simTime=30,simTimerHandle=null,simLocked=false,simFoundClues=new Set();
+
+function simQ(s){return document.querySelector(s)}
+function simRender(){
+ const c=simCases[simIndex];
+ simLocked=false;simFoundClues=new Set();simTime=30;
+ simQ("#simCase").textContent=String(simIndex+1).padStart(2,"0")+" / "+simCases.length;
+ simQ("#simType").textContent=c.type;simQ("#simDifficulty").textContent=c.difficulty;
+ simQ("#simScore").textContent=simScore;simQ("#simStreak").textContent=simStreak;simQ("#simTimer").textContent="30s";
+ simQ("#simProgressText").textContent=Math.round((simIndex/simCases.length)*100)+"%";
+ simQ("#simProgress").style.width=((simIndex/simCases.length)*100)+"%";
+ simQ("#simClueCount").textContent="0 / 3";simQ("#simFound").textContent=simFound;simQ("#simBest").textContent="—";
+ simQ("#simResult").className="sim-result";simQ("#simResult").textContent="Waiting for your investigation…";
+ simQ("#simRiskText").textContent="UNKNOWN";simQ("#simRiskbar").style.width="0%";
+ simQ("#simNext").disabled=true;
+ simQ("#simStatus").innerHTML='<span class="sim-status-icon">⌁</span><div><b>SCAN READY</b><small>Inspect the message before deciding.</small></div>';
+ simQ("#simTip").querySelector("p").textContent=c.tip;
+ simQ("#simClues").innerHTML="";
+ simQ(".sim-evidence").textContent=c.sender;simQ(".sim-evidence[data-clue='urgency']").textContent=c.subject;simQ(".sim-link").textContent="🔗 "+c.link;
+ document.querySelector(".sim-mail-body").textContent=c.body;
+ document.querySelectorAll(".sim-choice").forEach(b=>{b.disabled=false;b.classList.remove("selected","correct","incorrect")});
+ simStartTimer();
+}
+function simStartTimer(){
+ clearInterval(simTimerHandle);
+ simTimerHandle=setInterval(()=>{
+   if(simLocked)return;
+   simTime--;simQ("#simTimer").textContent=simTime+"s";
+   if(simTime<=10)simQ("#simTimer").style.color="#ff628d";
+   if(simTime<=0){clearInterval(simTimerHandle);simChoose("timeout")}
+ },1000);
+}
+function simInspect(key,el){
+ if(simLocked||simFoundClues.has(key))return;
+ simFoundClues.add(key);simFound++;
+ const c=simCases[simIndex];
+ el.classList.add("found");
+ const box=document.createElement("div");box.className="sim-clue good";box.innerHTML='<span>🚩</span><div><strong>RED FLAG DETECTED</strong><br>'+c.clues[key]+'</div>';
+ simQ("#simClues").appendChild(box);
+ simQ("#simClueCount").textContent=simFoundClues.size+" / 3";simQ("#simFound").textContent=simFound;
+ simQ("#simStatus").innerHTML='<span class="sim-status-icon">✓</span><div><b>CLUE LOGGED</b><small>'+simFoundClues.size+' of 3 suspicious details found.</small></div>';
+ simQ("#simProgress").style.width=Math.min(100,(simIndex/simCases.length)*100+simFoundClues.size*8)+"%";
+}
+function simChoose(choice){
+ if(simLocked)return;
+ simLocked=true;clearInterval(simTimerHandle);
+ const c=simCases[simIndex];
+ const good=choice===c.best;
+ const timed=choice==="timeout";
+ document.querySelectorAll(".sim-choice").forEach(b=>b.disabled=true);
+ const chosen=document.querySelector('[data-sim2="'+choice+'"]');
+ if(chosen)chosen.classList.add(good?"correct":"incorrect");
+ if(good){
+   const bonus=Math.max(0,simTime);
+   simScore+=100+simFoundClues.size*25+bonus;
+   simStreak++;simQ("#simResult").className="sim-result good";
+   simQ("#simResult").textContent="✓ Excellent decision. You avoided the trap and verified through a safer channel.";
+   simQ("#simBest").textContent=choice==="official"?"OFFICIAL SITE":"REPORT";
+   simQ("#simRiskText").textContent="LOW EXPOSURE";simQ("#simRiskText").style.color="#a8ff3e";
+   simQ("#simRiskbar").style.width=Math.max(8,c.risk-55)+"%";
+   simQ("#simStatus").innerHTML='<span class="sim-status-icon">✓</span><div><b>FORTRESS SECURED</b><small>Strong decision. Bonus points awarded for investigation.</small></div>';
+ }else{
+   simStreak=0;
+   simQ("#simResult").className="sim-result bad";
+   simQ("#simResult").textContent=timed?"⏱ Time expired. Slow down, inspect the evidence, and use an independent channel.":"⚠ High exposure. The safer move was to avoid the message and use an official or independently verified channel.";
+   simQ("#simBest").textContent=c.best==="official"?"OFFICIAL SITE":"REPORT";
+   simQ("#simRiskText").textContent="HIGH EXPOSURE";simQ("#simRiskText").style.color="#ff628d";
+   simQ("#simRiskbar").style.width=c.risk*10+"%";
+   simQ("#simStatus").innerHTML='<span class="sim-status-icon">!</span><div><b>THREAT DETECTED</b><small>Review the red flags before the next case.</small></div>';
+ }
+ simQ("#simScore").textContent=simScore;simQ("#simStreak").textContent=simStreak;simQ("#simNext").disabled=false;
+}
+document.querySelectorAll(".sim-evidence,.sim-link").forEach(el=>el.addEventListener("click",()=>simInspect(el.dataset.clue,el)));
+document.querySelectorAll(".sim-choice").forEach(el=>el.addEventListener("click",()=>simChoose(el.dataset.sim2)));
+simQ("#simNext")?.addEventListener("click",()=>{if(simIndex<simCases.length-1){simIndex++;simRender()}else{simIndex=0;simRender()}});
+simQ("#simReset")?.addEventListener("click",()=>{simIndex=0;simScore=0;simStreak=0;simFound=0;simRender()});
+simRender();
+
 </script>
 </body>
 </html>
