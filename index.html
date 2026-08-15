@@ -980,6 +980,65 @@ body::after {
   background: linear-gradient(90deg, #35e7ff, #8c62ff, #ff4fd8) !important;
 }
 
+
+/* ===== SIMULATOR FINAL COLOR CLEANUP ===== */
+/* Remove all yellow/brown from simulator heading, tag, message card and text */
+[data-route="simulator"] .tag {
+  color: #fff !important;
+  border-color: #35e7ff66 !important;
+  background: #35e7ff12 !important;
+}
+
+[data-route="simulator"] .heading h2 {
+  color: #fff !important;
+  background: none !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+[data-route="simulator"] .heading h2,
+[data-route="simulator"] .heading p,
+[data-route="simulator"] .panel,
+[data-route="simulator"] .panel p {
+  text-shadow: none;
+}
+
+/* Message / email preview: force dark cyber background and cyan border */
+[data-route="simulator"] .panel > div[style*="border"] {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(53,231,255,.07), transparent 42%),
+    linear-gradient(145deg, #0a1220, #060912) !important;
+  border: 1px solid #35e7ff55 !important;
+  color: #fff !important;
+}
+
+/* Force message text white */
+[data-route="simulator"] .panel > div[style*="border"] p,
+[data-route="simulator"] .panel > div[style*="border"] p b {
+  color: #fff !important;
+}
+
+/* Keep only intentional cyber accents */
+[data-route="simulator"] .panel > div[style*="border"] p:nth-child(2) b {
+  color: #ff4fd8 !important;
+}
+
+[data-route="simulator"] .panel > div[style*="border"] p .muted,
+[data-route="simulator"] .panel > div[style*="border"] .muted {
+  color: #ff91e0 !important;
+}
+
+/* Remove any brown/yellow simulator panel borders */
+[data-route="simulator"] .panel,
+[data-route="simulator"] .panel > div {
+  --brown: transparent;
+}
+
+/* Simulator outer panel */
+[data-route="simulator"] .panel {
+  border-color: #35e7ff33 !important;
+  background: linear-gradient(145deg, #07101c, #050711) !important;
+}
+
 </style>
 </head>
 <body>
