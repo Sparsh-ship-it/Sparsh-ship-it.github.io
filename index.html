@@ -63,6 +63,671 @@
 @media(min-width:700px){
 .top{width:min(1120px,94%)}.menu{display:none}.nav{display:flex;position:static;padding:0;border:0;background:none;gap:2px}.nav a{padding:9px}.bottom{display:none}main{padding-top:105px}.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center;min-height:70vh}.hero h1{font-size:clamp(4rem,7vw,6.5rem)}.actions{display:flex;flex-wrap:wrap}.cards{grid-template-columns:repeat(4,1fr)}.tools{grid-template-columns:repeat(2,1fr)}.help{grid-template-columns:repeat(2,1fr)}.footer{padding-bottom:35px;flex-direction:row;justify-content:space-between}.threat-panel{grid-template-columns:1.15fr .85fr}.threat-grid{grid-template-columns:1fr 1fr}
 }
+
+/* ===== CYBER FORTRESS ANIMATION LAYER ===== */
+@keyframes cfFadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes cfFadeIn {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@keyframes cfFloat {
+  0%,100% { transform:translate3d(0,0,0); }
+  50% { transform:translate3d(0,-12px,0); }
+}
+@keyframes cfPulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(53,231,255,0), 0 20px 70px #0005; }
+  50% { box-shadow:0 0 24px rgba(53,231,255,.14), 0 25px 80px #0008; }
+}
+@keyframes cfGlow {
+  0%,100% { filter:drop-shadow(0 0 0 rgba(53,231,255,0)); }
+  50% { filter:drop-shadow(0 0 12px rgba(53,231,255,.45)); }
+}
+@keyframes cfScan {
+  0% { transform:translateY(-110%); opacity:0; }
+  15% { opacity:.35; }
+  50% { opacity:.12; }
+  100% { transform:translateY(110%); opacity:0; }
+}
+@keyframes cfShimmer {
+  0% { background-position:200% 0; }
+  100% { background-position:-200% 0; }
+}
+@keyframes cfBlink {
+  0%,45%,100% { opacity:1; }
+  50%,70% { opacity:.35; }
+}
+@keyframes cfBorder {
+  0%,100% { border-color:rgba(255,255,255,.13); }
+  50% { border-color:rgba(53,231,255,.42); }
+}
+@keyframes cfThreat {
+  0%,100% { transform:scale(1) rotate(0); }
+  50% { transform:scale(1.04) rotate(-1deg); }
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:40;
+  background:linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(53,231,255,.025) 48%,
+    rgba(53,231,255,.07) 50%,
+    transparent 52%
+  );
+  height:30%;
+  animation:cfScan 7s linear infinite;
+  mix-blend-mode:screen;
+}
+
+.bg{
+  animation:cfFadeIn 1.2s ease both;
+}
+.orb{
+  animation:cfFloat 7s ease-in-out infinite;
+}
+.top{
+  animation:cfFadeIn .7s ease both, cfBorder 4s ease-in-out infinite;
+}
+.logo b{
+  animation:cfGlow 2.5s ease-in-out infinite;
+}
+.menu{
+  transition:transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.menu:hover{ transform:scale(1.06); border-color:rgba(53,231,255,.5); }
+.menu:active{ transform:scale(.94); }
+
+.route.active{
+  animation:cfFadeUp .5s cubic-bezier(.2,.8,.2,1) both;
+}
+.hero > div:first-child{
+  animation:cfFadeUp .7s .05s both;
+}
+.hero .terminal{
+  animation:cfFadeUp .7s .18s both, cfPulse 4s 1s ease-in-out infinite;
+}
+.terminal{
+  position:relative;
+}
+.terminal::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),var(--pink),transparent);
+  opacity:.6;
+  animation:cfShimmer 3s linear infinite;
+  background-size:200% 100%;
+}
+.term p{
+  animation:cfFadeUp .5s both;
+}
+.term p:nth-child(1){animation-delay:.2s}
+.term p:nth-child(2){animation-delay:.35s}
+.term p:nth-child(3){animation-delay:.5s}
+.term p:nth-child(4){animation-delay:.65s}
+.term p:nth-child(5){animation-delay:.8s}
+
+.card,.panel,.threat-main,.threat-score{
+  animation:cfFadeUp .55s both;
+}
+.card:nth-child(2){animation-delay:.06s}
+.card:nth-child(3){animation-delay:.12s}
+.card:nth-child(4){animation-delay:.18s}
+
+.card{
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-120%;
+  width:70%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  transform:skewX(-18deg);
+  transition:left .55s ease;
+  pointer-events:none;
+}
+.card:hover::before{left:140%}
+.card:hover .icon{
+  animation:cfThreat .7s ease-in-out;
+}
+.card .icon{
+  transition:transform .25s ease;
+}
+
+.btn{
+  position:relative;
+  overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.13) 50%,transparent 80%);
+  background-size:220% 100%;
+  transform:translateX(-100%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(53,231,255,.1);
+}
+.btn:hover::before{transform:translateX(100%)}
+.btn:active{transform:translateY(1px) scale(.98)}
+
+.threat-tab{
+  transition:transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.threat-tab.active{
+  box-shadow:0 0 22px rgba(53,231,255,.09);
+}
+.threat-title > span{
+  animation:cfThreat 3s ease-in-out infinite;
+}
+.threat-progress i,.bar i,.meter i{
+  position:relative;
+  overflow:hidden;
+}
+.threat-progress i::after,.bar i::after,.meter i::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  background-size:200% 100%;
+  animation:cfShimmer 2.2s linear infinite;
+}
+.threat-stat b{
+  animation:cfGlow 2.8s ease-in-out infinite;
+}
+
+.quiz .scorebox{
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.quiz .scorebox:hover{
+  transform:translateY(-3px);
+  border-color:rgba(140,98,255,.45);
+  box-shadow:0 10px 35px rgba(140,98,255,.08);
+}
+.answer{
+  animation:cfFadeUp .4s both;
+}
+.answer:nth-child(2){animation-delay:.05s}
+.answer:nth-child(3){animation-delay:.1s}
+.answer:nth-child(4){animation-delay:.15s}
+.answer.correct{
+  animation:cfPulse .9s ease-in-out;
+}
+.answer.wrong{
+  animation:cfBlink .6s ease-in-out;
+}
+#feedback{
+  animation:cfFadeIn .35s ease both;
+}
+
+.tool input{
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.tool input:focus{
+  outline:none;
+  border-color:rgba(53,231,255,.55);
+  box-shadow:0 0 0 3px rgba(53,231,255,.08),0 0 25px rgba(53,231,255,.08);
+  transform:translateY(-1px);
+}
+
+.threat-q{
+  animation:cfFadeUp .4s ease both;
+}
+.threat-q button{
+  transition:transform .2s ease, border-color .2s ease, color .2s ease;
+}
+.threat-q button:hover{
+  transform:translateX(4px);
+}
+
+[data-sim]{
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+[data-sim]:hover{
+  transform:translateY(-2px);
+}
+
+.check{
+  animation:cfFadeUp .35s ease both;
+}
+
+.bottom a{
+  transition:transform .2s ease, color .2s ease, background .2s ease;
+}
+.bottom a:hover{
+  transform:translateY(-3px);
+}
+.bottom a.active span{
+  animation:cfGlow 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+    transition-duration:.001ms !important;
+  }
+}
+
+
+/* ===== THREATS: CYAN THEME ===== */
+.threats-cyan-fix,
+.threat-tab.active,
+.threat-tab:hover {
+  color: #fff;
+  border-color: #35e7ff66;
+  background: #35e7ff12;
+}
+
+
+/* ===== REMOVE YELLOW FROM THREATS SECTION ===== */
+.threat-tab,
+.threat-tab:hover,
+.threat-tab.active {
+  color: #fff;
+  border-color: #35e7ff66;
+  background: #35e7ff12;
+}
+
+.threat-grid > div,
+.threat-stat {
+  background: linear-gradient(145deg, #35e7ff0b, #ffffff03);
+  border-color: var(--line);
+}
+
+.threat-grid h4,
+.threat-grid ul,
+.threat-stat b,
+.threat-stat span {
+  color: inherit;
+}
+
+.threat-stat b {
+  color: #fff;
+}
+
+.threat-score strong {
+  color: #35e7ff;
+}
+
+.risk.critical {
+  color: #35e7ff;
+  border-color: #35e7ff66;
+  background: #35e7ff12;
+}
+
+
+/* ===== TOOLS: REMOVE WHITE BUTTONS / URL CHECK CYAN THEME ===== */
+.tool .btn,
+#urlcheck,
+#otp {
+  color: #fff;
+  background: #35e7ff12;
+  border-color: #35e7ff66;
+  box-shadow: none;
+}
+
+.tool .btn:hover,
+#urlcheck:hover,
+#otp:hover {
+  color: #fff;
+  background: #35e7ff20;
+  border-color: #35e7ff;
+  box-shadow: 0 0 22px #35e7ff22;
+}
+
+.tool .btn.pink,
+#otp {
+  color: #ff91e0;
+  background: #ff4fd80b;
+  border-color: #ff4fd866;
+}
+
+.tool .btn.pink:hover,
+#otp:hover {
+  color: #fff;
+  background: #ff4fd818;
+  border-color: #ff4fd8;
+}
+
+
+/* =========================================================
+   CYBER FORTRESS // VISUAL OVERHAUL
+   Cleaner background + stronger motion + unified buttons
+   ========================================================= */
+
+/* Remove the distracting grid completely */
+.bg {
+  display: none !important;
+}
+
+/* Animated atmospheric background */
+body {
+  position: relative;
+  background:
+    radial-gradient(900px 500px at 8% 8%, rgba(53,231,255,.11), transparent 62%),
+    radial-gradient(800px 500px at 92% 12%, rgba(140,98,255,.10), transparent 60%),
+    radial-gradient(700px 500px at 50% 100%, rgba(255,79,216,.07), transparent 65%),
+    linear-gradient(135deg, #03060b 0%, #070914 48%, #05050a 100%);
+  background-size: 140% 140%;
+  animation: cfAtmosphere 16s ease-in-out infinite alternate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(53,231,255,.08) 0 2px, transparent 3px),
+    radial-gradient(circle at 75% 20%, rgba(255,79,216,.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 55% 75%, rgba(140,98,255,.07) 0 2px, transparent 3px);
+  background-size: 180px 180px, 240px 240px, 210px 210px;
+  animation: cfParticles 28s linear infinite;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.28) 100%),
+    linear-gradient(115deg, transparent 0 47%, rgba(53,231,255,.035) 50%, transparent 53%);
+  background-size: 100% 100%, 260% 100%;
+  animation: cfSweep 9s linear infinite;
+}
+
+/* Replace the old floating orb with a softer animated glow */
+.orb {
+  width: 420px;
+  height: 420px;
+  top: 4%;
+  left: -160px;
+  opacity: .10;
+  filter: blur(110px);
+  animation: cfOrb 10s ease-in-out infinite alternate;
+}
+
+/* Stronger route entrance */
+.route.active {
+  animation: cfRouteIn .65s cubic-bezier(.16,1,.3,1) both;
+}
+
+/* Unified cyber buttons */
+.btn,
+.answer,
+.threat-q button,
+.threat-tab {
+  font-family: inherit;
+}
+
+.quiz .btn,
+.quiz #next,
+.quiz #reset {
+  color: #fff;
+  background: linear-gradient(135deg, #35e7ff14, #8c62ff14);
+  border-color: #35e7ff66;
+  box-shadow: 0 8px 30px rgba(53,231,255,.06);
+}
+
+.quiz #next:not(:disabled):hover,
+.quiz #reset:hover {
+  color: #fff;
+  background: linear-gradient(135deg, #35e7ff25, #8c62ff25);
+  border-color: #35e7ff;
+  box-shadow: 0 0 28px rgba(53,231,255,.18);
+}
+
+/* Remove the white/pink reset appearance */
+.quiz #reset {
+  color: #fff;
+  border-color: #ff4fd866;
+  background: linear-gradient(135deg, #ff4fd812, #8c62ff12);
+}
+
+.quiz #reset:hover {
+  border-color: #ff4fd8;
+  background: linear-gradient(135deg, #ff4fd822, #8c62ff20);
+  box-shadow: 0 0 28px rgba(255,79,216,.16);
+}
+
+/* Threat challenge button */
+#threatChallenge {
+  color: #fff;
+  border-color: #35e7ff66;
+  background: linear-gradient(135deg, #35e7ff14, #8c62ff14);
+  box-shadow: 0 8px 30px rgba(53,231,255,.06);
+}
+
+#threatChallenge:hover {
+  color: #fff;
+  border-color: #35e7ff;
+  background: linear-gradient(135deg, #35e7ff25, #8c62ff25);
+  box-shadow: 0 0 30px rgba(53,231,255,.18);
+}
+
+/* Quiz answers become darker and more cyber */
+.answer {
+  color: #dfe7f5;
+  background: linear-gradient(135deg, rgba(10,16,30,.82), rgba(15,11,30,.72));
+  border-color: rgba(255,255,255,.10);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+.answer:hover {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(53,231,255,.10), rgba(140,98,255,.09));
+  border-color: #35e7ff66;
+  box-shadow: 0 0 24px rgba(53,231,255,.07);
+}
+
+.answer.correct {
+  color: #caffea;
+  border-color: #35e7ff88;
+  background: linear-gradient(135deg, rgba(53,231,255,.12), rgba(168,255,62,.07));
+}
+
+.answer.wrong {
+  color: #ffd3e6;
+  border-color: #ff628d88;
+  background: linear-gradient(135deg, rgba(255,98,141,.10), rgba(255,79,216,.06));
+}
+
+/* Threat cards: eliminate remaining yellow-looking surfaces */
+.threat-grid > div,
+.threat-stat,
+.threat-q {
+  background: linear-gradient(145deg, rgba(53,231,255,.065), rgba(140,98,255,.035) 55%, rgba(255,255,255,.018));
+  border-color: rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025), 0 15px 55px rgba(0,0,0,.22);
+}
+
+.threat-grid > div:hover,
+.threat-stat:hover {
+  border-color: #35e7ff55;
+  box-shadow: 0 0 30px rgba(53,231,255,.07), 0 20px 60px rgba(0,0,0,.3);
+  transform: translateY(-3px);
+  transition: .25s ease;
+}
+
+/* More animated glass surfaces */
+.card,
+.panel,
+.threat-main,
+.threat-score,
+.terminal {
+  position: relative;
+  overflow: hidden;
+}
+
+.card::after,
+.panel::after,
+.threat-main::after,
+.threat-score::after,
+.terminal::after {
+  content: "";
+  position: absolute;
+  top: -120%;
+  left: -30%;
+  width: 35%;
+  height: 340%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(53,231,255,.045),
+    rgba(255,255,255,.06),
+    transparent
+  );
+  transform: rotate(18deg);
+  animation: cfGlassSweep 8s ease-in-out infinite;
+}
+
+.card:nth-child(2)::after,
+.tool:nth-child(2)::after { animation-delay: 1.2s; }
+.card:nth-child(3)::after,
+.tool:nth-child(3)::after { animation-delay: 2.4s; }
+.card:nth-child(4)::after { animation-delay: 3.6s; }
+
+/* Animated terminal text */
+.term .lime,
+.term .yellow,
+.term .cyan {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.term .lime { animation: cfTerminalPulse 2.2s ease-in-out infinite; }
+.term .yellow { animation: cfTerminalPulse 2.7s ease-in-out infinite .4s; }
+.term .cyan { animation: cfTerminalPulse 2.4s ease-in-out infinite .8s; }
+
+/* Animated heading gradient */
+.gradient {
+  background-size: 220% auto;
+  animation: cfGradient 5s linear infinite;
+}
+
+/* Threat icons and quiz accents */
+.threat-title > span {
+  filter: drop-shadow(0 0 10px rgba(53,231,255,.25));
+  animation: cfIconFloat 3s ease-in-out infinite;
+}
+
+#threatProgress,
+#progress,
+#pwbar,
+#riskbar {
+  box-shadow: 0 0 12px rgba(53,231,255,.2);
+}
+
+/* Bottom nav glow */
+.bottom {
+  animation: cfNavFloat 5s ease-in-out infinite;
+}
+
+/* Input glow */
+.tool input:focus {
+  animation: cfFocusPulse 1.8s ease-in-out infinite;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes cfAtmosphere {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 55% 35%; }
+  100% { background-position: 100% 80%; }
+}
+
+@keyframes cfParticles {
+  from { transform: translate3d(0,0,0) rotate(0deg); }
+  to { transform: translate3d(80px,-100px,0) rotate(8deg); }
+}
+
+@keyframes cfSweep {
+  0% { background-position: 0 0, -220% 0; }
+  100% { background-position: 0 0, 220% 0; }
+}
+
+@keyframes cfOrb {
+  0% { transform: translate3d(0,0,0) scale(.9); }
+  50% { transform: translate3d(35vw,12vh,0) scale(1.15); }
+  100% { transform: translate3d(75vw,-5vh,0) scale(.85); }
+}
+
+@keyframes cfRouteIn {
+  from { opacity: 0; transform: translateY(24px) scale(.985); filter: blur(3px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes cfGlassSweep {
+  0%, 25% { left: -45%; opacity: 0; }
+  35% { opacity: 1; }
+  60%, 100% { left: 130%; opacity: 0; }
+}
+
+@keyframes cfGradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 220% center; }
+}
+
+@keyframes cfIconFloat {
+  0%,100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-7px) rotate(-2deg); }
+}
+
+@keyframes cfTerminalPulse {
+  0%,100% { opacity: .72; }
+  50% { opacity: 1; }
+}
+
+@keyframes cfNavFloat {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+@keyframes cfFocusPulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(53,231,255,.07), 0 0 20px rgba(53,231,255,.06); }
+  50% { box-shadow: 0 0 0 3px rgba(53,231,255,.12), 0 0 35px rgba(53,231,255,.14); }
+}
+
+/* Respect accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body::before,
+  body::after,
+  .orb,
+  .bottom,
+  .gradient,
+  .card::after,
+  .panel::after,
+  .threat-main::after,
+  .threat-score::after,
+  .terminal::after {
+    animation: none !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -287,6 +952,11 @@
 <a class="card" href="https://cybercrime.gov.in/Webform/suspect_search_repository.aspx" target="_blank"><div class="icon">🔎</div><h3>SUSPECT SEARCH ↗</h3></a>
 <a class="card" href="https://www.cert-in.org.in/" target="_blank"><div class="icon">🛡️</div><h3>CERT-IN ↗</h3></a>
 </div>
+</div>
+<div class="panel" style="margin-top:18px;text-align:center;border-color:#35e7ff33;background:linear-gradient(145deg,#35e7ff08,#8c62ff06);">
+<a href="https://github.com/Sparsh-ship-it" target="_blank" rel="noopener" aria-label="Made by Sparsh Singhal - GitHub" style="display:block;">
+<span class="muted" style="font-size:.7rem;letter-spacing:1px;">MADE BY <strong style="color:#35e7ff;">SPARSH SINGHAL</strong></span>
+</a>
 </div>
 </section>
 </main>
