@@ -728,6 +728,258 @@ body::after {
   }
 }
 
+
+/* ===== EDITABLE TERMINAL + BLINKING CURSOR ===== */
+.term {
+  position: relative;
+  outline: none;
+  caret-color: #35e7ff;
+}
+
+.term[contenteditable="true"]:focus {
+  box-shadow: inset 0 0 35px rgba(53,231,255,.035);
+}
+
+.term::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 13px;
+  margin-left: 5px;
+  vertical-align: -2px;
+  background: #35e7ff;
+  box-shadow: 0 0 10px rgba(53,231,255,.8);
+  animation: terminalCursorBlink .85s steps(1,end) infinite;
+}
+
+.term:focus::after {
+  background: #a8ff3e;
+  box-shadow: 0 0 12px rgba(168,255,62,.85);
+}
+
+@keyframes terminalCursorBlink {
+  0%, 45% { opacity: 1; }
+  46%, 100% { opacity: 0; }
+}
+
+
+/* ===== DECISION SIMULATOR // MATCH CYBER FORTRESS THEME ===== */
+[data-route="simulator"] .panel {
+  background:
+    radial-gradient(circle at 15% 15%, rgba(53,231,255,.055), transparent 35%),
+    radial-gradient(circle at 85% 85%, rgba(140,98,255,.045), transparent 38%),
+    linear-gradient(145deg, rgba(10,16,29,.92), rgba(7,9,18,.94));
+  border-color: rgba(53,231,255,.18);
+  box-shadow: 0 25px 80px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+[data-route="simulator"] .panel > div:first-child {
+  background:
+    linear-gradient(145deg, rgba(53,231,255,.055), rgba(140,98,255,.035)),
+    rgba(4,7,15,.72) !important;
+  border-color: rgba(53,231,255,.22) !important;
+  box-shadow: inset 0 0 35px rgba(53,231,255,.025);
+}
+
+[data-route="simulator"] .panel > div:first-child p {
+  color: #d9e2f0;
+}
+
+[data-route="simulator"] .panel > div:first-child p b {
+  color: #35e7ff;
+}
+
+[data-route="simulator"] .panel > div:first-child p:nth-child(2) b {
+  color: #ff4fd8;
+}
+
+[data-route="simulator"] .panel > div:first-child .muted {
+  color: #ff91e0 !important;
+  text-shadow: 0 0 12px rgba(255,79,216,.18);
+}
+
+/* Simulator choices */
+[data-route="simulator"] .panel > div:nth-child(2) {
+  background: transparent;
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn {
+  color: #dce8f7;
+  background: linear-gradient(135deg, rgba(53,231,255,.065), rgba(140,98,255,.055));
+  border-color: rgba(255,255,255,.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+  transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  border-color: #35e7ff77;
+  background: linear-gradient(135deg, rgba(53,231,255,.14), rgba(140,98,255,.11));
+  box-shadow: 0 0 26px rgba(53,231,255,.11);
+}
+
+/* Risky actions get a subtle pink accent */
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(1),
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(3) {
+  border-color: rgba(255,79,216,.25);
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(1):hover,
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(3):hover {
+  border-color: #ff4fd877;
+  background: linear-gradient(135deg, rgba(255,79,216,.10), rgba(140,98,255,.08));
+  box-shadow: 0 0 26px rgba(255,79,216,.10);
+}
+
+/* Safe actions use cyan/lime */
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(2),
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(4) {
+  border-color: rgba(53,231,255,.28);
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(2):hover,
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(4):hover {
+  border-color: #35e7ff88;
+}
+
+/* Decision feedback */
+[data-route="simulator"] #sim {
+  color: #b9f6ff;
+  background: linear-gradient(135deg, rgba(53,231,255,.065), rgba(140,98,255,.04));
+  border-color: rgba(53,231,255,.28);
+  box-shadow: inset 0 0 25px rgba(53,231,255,.025);
+}
+
+/* Risk meter */
+[data-route="simulator"] .meter {
+  background: rgba(255,255,255,.055);
+}
+
+[data-route="simulator"] #riskbar {
+  background: linear-gradient(90deg, #35e7ff, #8c62ff, #ff4fd8);
+  box-shadow: 0 0 14px rgba(53,231,255,.22);
+}
+
+/* Subtle simulator pulse */
+[data-route="simulator"] .panel {
+  animation: simulatorGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes simulatorGlow {
+  from { box-shadow: 0 25px 80px rgba(0,0,0,.42), 0 0 0 rgba(53,231,255,0); }
+  to { box-shadow: 0 25px 80px rgba(0,0,0,.42), 0 0 32px rgba(53,231,255,.045); }
+}
+
+
+/* ===== SIMULATOR: FORCE FULL CYBER FORTRESS PALETTE ===== */
+[data-route="simulator"],
+[data-route="simulator"] .section {
+  background: transparent !important;
+}
+
+[data-route="simulator"] .panel {
+  background: linear-gradient(145deg, rgba(7,14,27,.97), rgba(5,7,16,.97)) !important;
+  border: 1px solid rgba(53,231,255,.22) !important;
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.5),
+    inset 0 1px 0 rgba(255,255,255,.025),
+    0 0 45px rgba(53,231,255,.025) !important;
+}
+
+/* Message/email preview — remove the inline brown/black styling */
+[data-route="simulator"] .panel > div:first-child {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(53,231,255,.07), transparent 42%),
+    linear-gradient(145deg, rgba(11,19,34,.96), rgba(6,9,19,.98)) !important;
+  border: 1px solid rgba(53,231,255,.25) !important;
+  box-shadow: inset 0 0 30px rgba(53,231,255,.025) !important;
+}
+
+/* Override the inline brown border/background even more specifically */
+[data-route="simulator"] .panel > div[style] {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(53,231,255,.07), transparent 42%),
+    linear-gradient(145deg, rgba(11,19,34,.96), rgba(6,9,19,.98)) !important;
+  border-color: rgba(53,231,255,.25) !important;
+}
+
+/* Email text */
+[data-route="simulator"] .panel > div:first-child p {
+  color: #dbe7f5 !important;
+}
+
+[data-route="simulator"] .panel > div:first-child p b {
+  color: #35e7ff !important;
+}
+
+[data-route="simulator"] .panel > div:first-child p:nth-child(2) b {
+  color: #ff4fd8 !important;
+}
+
+[data-route="simulator"] .panel > div:first-child .muted {
+  color: #ff91e0 !important;
+}
+
+/* All simulator choices — no white buttons */
+[data-route="simulator"] .panel > div:nth-child(2) .btn,
+[data-route="simulator"] .panel button {
+  color: #dce8f7 !important;
+  background: linear-gradient(135deg, rgba(53,231,255,.07), rgba(140,98,255,.055)) !important;
+  border: 1px solid rgba(53,231,255,.28) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:hover,
+[data-route="simulator"] .panel button:hover {
+  color: #fff !important;
+  background: linear-gradient(135deg, rgba(53,231,255,.16), rgba(140,98,255,.12)) !important;
+  border-color: #35e7ff !important;
+  box-shadow: 0 0 28px rgba(53,231,255,.14) !important;
+  transform: translateY(-2px);
+}
+
+/* Risky buttons */
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(1),
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(3) {
+  border-color: rgba(255,79,216,.32) !important;
+  background: linear-gradient(135deg, rgba(255,79,216,.07), rgba(140,98,255,.05)) !important;
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(1):hover,
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(3):hover {
+  border-color: #ff4fd8 !important;
+  background: linear-gradient(135deg, rgba(255,79,216,.15), rgba(140,98,255,.10)) !important;
+}
+
+/* Safe buttons */
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(2),
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(4) {
+  border-color: rgba(168,255,62,.30) !important;
+}
+
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(2):hover,
+[data-route="simulator"] .panel > div:nth-child(2) .btn:nth-child(4):hover {
+  border-color: #a8ff3e !important;
+  background: linear-gradient(135deg, rgba(168,255,62,.10), rgba(53,231,255,.08)) !important;
+}
+
+/* Decision result */
+[data-route="simulator"] #sim {
+  color: #b9f6ff !important;
+  background: linear-gradient(135deg, rgba(53,231,255,.065), rgba(140,98,255,.045)) !important;
+  border-color: rgba(53,231,255,.30) !important;
+}
+
+/* Meter */
+[data-route="simulator"] .meter {
+  background: rgba(255,255,255,.055) !important;
+}
+
+[data-route="simulator"] #riskbar {
+  background: linear-gradient(90deg, #35e7ff, #8c62ff, #ff4fd8) !important;
+}
+
 </style>
 </head>
 <body>
@@ -769,7 +1021,7 @@ body::after {
 </div>
 <div class="terminal">
 <div class="termhead">● ● ● &nbsp; fortress_status.log</div>
-<div class="term">
+<div class="term" contenteditable="true" spellcheck="false" role="textbox" aria-label="Editable terminal interface" tabindex="0">
 <p class="lime">root@fortress:~$ system_scan</p>
 <p class="lime">[OK] MFA ........ ACTIVE</p>
 <p class="lime">[OK] BACKUPS .... READY</p>
